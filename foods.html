@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Discover Shaun Adriel Torres' favorite foods, restaurants, snacks, sweets, and drinks.">
+  <title>Favorite Foods â€” Shaun Adriel Torres</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+
+  <style>
+    :root {
+      --page-padding: clamp(22px, 5vw, 76px);
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.68);
+      --accent: #b8ffda;
+      --accent-blue: #b9e7ff;
+      --glass: rgba(8, 18, 16, 0.58);
+      --glass-border: rgba(255, 255, 255, 0.16);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(184, 255, 218, 0.7) #07100e;
+    }
+
+    body {
+      min-width: 320px;
+      overflow-x: hidden;
+      color: var(--text-primary);
+      background: #07100e;
+      font-family: "Helvetica Neue", Arial, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      color: inherit;
+      font: inherit;
+    }
+
+    ::selection {
+      color: #06100d;
+      background: var(--accent);
+    }
+
+    ::-webkit-scrollbar { width: 11px; }
+    ::-webkit-scrollbar-track { background: #07100e; }
+    ::-webkit-scrollbar-thumb {
+      border: 3px solid transparent;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--accent), #5d9584) padding-box;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 22px var(--page-padding);
+      pointer-events: none;
+      animation: header-arrive 850ms 100ms both cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .logo,
+    .site-nav {
+      pointer-events: auto;
+    }
+
+    .logo {
+      position: relative;
+      justify-self: start;
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 46px;
+      border: 1px solid var(--glass-border);
+      border-radius: 15px;
+      background: linear-gradient(145deg, rgba(184, 255, 218, 0.12), rgba(255, 255, 255, 0.04));
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.12), 0 16px 36px rgba(0, 0, 0, 0.23);
+      backdrop-filter: blur(18px);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      transition: transform 300ms ease, border-color 300ms ease;
+    }
+
+    .logo::after {
+      content: "";
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    .logo:hover,
+    .logo:focus-visible {
+      border-color: rgba(184, 255, 218, 0.58);
+      transform: translateY(-3px) rotate(-2deg);
+      outline: none;
+    }
+
+    .site-nav {
+      grid-column: 2;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px;
+      border: 1px solid var(--glass-border);
+      border-radius: 999px;
+      background: var(--glass);
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.12), 0 18px 50px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(22px) saturate(150%);
+      -webkit-backdrop-filter: blur(22px) saturate(150%);
+      transform: translateX(0);
+      transition: transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+
+    .site-header.is-past-foods .site-nav {
+      transform: translateX(calc(50vw - var(--page-padding) - 50%));
+    }
+
+    .nav-item {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 0 clamp(15px, 1.8vw, 25px);
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 13px;
+      font-weight: 650;
+      white-space: nowrap;
+      transition: color 240ms ease, background 240ms ease, transform 240ms ease;
+    }
+
+    .nav-item:hover,
+    .nav-item:focus-visible,
+    .nav-item[aria-current="page"] {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .nav-item[aria-current="page"]::after {
+      content: "";
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      transform: translateX(-50%);
+    }
+
+    .food-section {
+      --pointer-x: 50%;
+      --pointer-y: 45%;
+      --section-hue: 154;
+      position: relative;
+      isolation: isolate;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100svh;
+      padding: clamp(120px, 14vh, 164px) 0 clamp(70px, 9vh, 105px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at var(--pointer-x) var(--pointer-y), hsla(var(--section-hue), 82%, 72%, 0.13), transparent 22%),
+        radial-gradient(circle at 12% 76%, hsla(var(--section-hue), 60%, 38%, 0.15), transparent 30%),
+        radial-gradient(circle at 88% 72%, rgba(63, 104, 169, 0.18), transparent 32%),
+        linear-gradient(145deg, #06110d, #071712 46%, #0b1621);
+    }
+
+    .food-section:nth-child(even) {
+      background:
+        radial-gradient(circle at var(--pointer-x) var(--pointer-y), hsla(var(--section-hue), 82%, 72%, 0.12), transparent 22%),
+        radial-gradient(circle at 82% 72%, hsla(var(--section-hue), 58%, 38%, 0.15), transparent 30%),
+        linear-gradient(215deg, #081611, #071410 48%, #0c1722);
+    }
+
+    .food-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      opacity: 0.28;
+      background-image:
+        linear-gradient(rgba(184, 255, 218, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184, 255, 218, 0.05) 1px, transparent 1px);
+      background-size: 78px 78px;
+      mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 86%, transparent);
+    }
+
+    .food-section::after {
+      content: attr(data-word);
+      position: absolute;
+      left: 50%;
+      bottom: -0.18em;
+      z-index: -2;
+      color: transparent;
+      font-size: clamp(140px, 23vw, 370px);
+      font-weight: 800;
+      letter-spacing: -0.08em;
+      line-height: 0.72;
+      white-space: nowrap;
+      -webkit-text-stroke: 1px hsla(var(--section-hue), 80%, 82%, 0.055);
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+
+    .section-orbit {
+      position: absolute;
+      top: 56%;
+      left: 50%;
+      z-index: -1;
+      width: min(78vw, 1150px);
+      aspect-ratio: 1;
+      border: 1px solid hsla(var(--section-hue), 70%, 78%, 0.07);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .section-orbit::before,
+    .section-orbit::after {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border: 1px dashed rgba(185, 231, 255, 0.09);
+      border-radius: inherit;
+      animation: orbit-turn 46s linear infinite;
+    }
+
+    .section-orbit::after {
+      inset: 29%;
+      border-style: solid;
+      animation-direction: reverse;
+      animation-duration: 31s;
+    }
+
+    .section-heading {
+      position: relative;
+      z-index: 4;
+      width: min(100% - 40px, 1100px);
+      margin: 0 auto clamp(34px, 5vh, 58px);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 800ms ease, transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .food-section.is-visible .section-heading {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .page-title {
+      margin-bottom: clamp(24px, 4vh, 42px);
+      color: #fff;
+      font-size: clamp(64px, 8vw, 130px);
+      font-weight: 800;
+      letter-spacing: -0.075em;
+      line-height: 0.86;
+    }
+
+    .page-title .outline {
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.48);
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      font-size: 9px;
+      font-weight: 750;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .section-label::before,
+    .section-label::after {
+      content: "";
+      width: 26px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent));
+    }
+
+    .section-label::after {
+      background: linear-gradient(90deg, var(--accent), transparent);
+    }
+
+    .section-title {
+      color: #fff;
+      font-size: clamp(31px, 3.8vw, 61px);
+      font-weight: 720;
+      letter-spacing: -0.055em;
+      line-height: 1;
+    }
+
+    .section-subtitle {
+      max-width: 600px;
+      margin: 18px auto 0;
+      color: var(--text-secondary);
+      font-size: clamp(13px, 1.05vw, 17px);
+      line-height: 1.65;
+    }
+
+    .food-carousel {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(44px);
+      transition: opacity 800ms 120ms ease, transform 950ms 120ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .food-section.is-visible .food-carousel {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .food-carousel-viewport {
+      position: relative;
+      width: 100%;
+      height: clamp(360px, 45vw, 570px);
+      overflow: hidden;
+      touch-action: pan-y;
+      perspective: 1200px;
+    }
+
+    .food-card {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: min(64vw, 760px);
+      height: 100%;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: clamp(30px, 4vw, 58px);
+      background: linear-gradient(145deg, hsla(var(--section-hue), 45%, 15%, 0.96), rgba(7, 18, 21, 0.96));
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.08), 0 30px 90px rgba(0, 0, 0, 0.34);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(-50%) scale(0.72);
+      transition:
+        transform 760ms cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 520ms ease,
+        filter 620ms ease,
+        visibility 0s 760ms,
+        border-color 380ms ease;
+      pointer-events: none;
+    }
+
+    .food-card.is-active {
+      z-index: 4;
+      opacity: 1;
+      visibility: visible;
+      filter: blur(0);
+      transform: translateX(-50%) scale(1);
+      transition-delay: 0s;
+      pointer-events: auto;
+    }
+
+    .food-card.is-prev,
+    .food-card.is-next {
+      z-index: 2;
+      opacity: 0.48;
+      visibility: visible;
+      filter: blur(5px) saturate(0.7);
+      transition-delay: 0s;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+
+    .food-card.is-prev {
+      transform: translateX(calc(-50% - min(60vw, 710px))) scale(0.78) rotateY(7deg);
+    }
+
+    .food-card.is-next {
+      transform: translateX(calc(-50% + min(60vw, 710px))) scale(0.78) rotateY(-7deg);
+    }
+
+    /* Card image */
+    .food-card-media,
+    .food-card-media img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .food-card-media img {
+      display: block;
+      object-fit: cover;
+      object-position: center;
+      image-rendering: auto;
+      transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1), filter 500ms ease;
+    }
+
+    .food-card-media img:not([src]),
+    .food-card-media img[src=""] {
+      display: none;
+    }
+
+    .food-card-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(3, 10, 9, 0.78), transparent 55%, rgba(3, 10, 9, 0.2));
+    }
+
+    /* Card label */
+    .food-card-content {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .food-card-title {
+      color: #fff;
+      font-size: clamp(34px, 5vw, 76px);
+      font-weight: 780;
+      letter-spacing: -0.06em;
+      line-height: 0.95;
+      text-shadow: 0 12px 38px rgba(0, 0, 0, 0.7);
+      transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1), color 400ms ease;
+    }
+
+    .food-card-number {
+      position: absolute;
+      top: 28px;
+      right: 32px;
+      color: rgba(184, 255, 218, 0.72);
+      font-size: 9px;
+      font-weight: 750;
+      letter-spacing: 0.18em;
+    }
+
+    .food-card.is-active {
+      cursor: pointer;
+    }
+
+    .food-card-content::before {
+      content: "";
+      position: absolute;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      height: 48%;
+      z-index: -1;
+      background:
+        linear-gradient(
+          to top,
+          hsla(var(--section-hue), 48%, 12%, 0.99) 0%,
+          hsla(var(--section-hue), 45%, 14%, 0.98) 67%,
+          hsla(var(--section-hue), 42%, 16%, 0.68) 84%,
+          transparent 100%
+        );
+      transform: translateY(103%);
+      transition: transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .food-card-description {
+      position: absolute;
+      right: clamp(26px, 5vw, 64px);
+      bottom: clamp(30px, 5vw, 58px);
+      left: clamp(26px, 5vw, 64px);
+      z-index: 1;
+      max-width: 620px;
+      margin-inline: auto;
+      color: rgba(232, 244, 239, 0.82);
+      font-size: clamp(14px, 1.25vw, 18px);
+      font-weight: 480;
+      letter-spacing: -0.01em;
+      line-height: 1.55;
+      opacity: 0;
+      transform: translateY(34px);
+      transition:
+        opacity 360ms 80ms ease,
+        transform 620ms 80ms cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .food-card.is-active:hover,
+    .food-card.is-active:focus-visible,
+    .food-card.is-active.is-details-visible {
+      border-color: rgba(184, 255, 218, 0.45);
+    }
+
+    .food-card.is-active:focus-visible {
+      outline: 2px solid rgba(184, 255, 218, 0.7);
+      outline-offset: -6px;
+    }
+
+    .food-card.is-active:hover .food-card-media img,
+    .food-card.is-active:focus-visible .food-card-media img,
+    .food-card.is-active.is-details-visible .food-card-media img {
+      filter: saturate(0.94) contrast(1.03) brightness(0.86);
+      transform: scale(1.045);
+    }
+
+    .food-card.is-active:hover .food-card-content::before,
+    .food-card.is-active:focus-visible .food-card-content::before,
+    .food-card.is-active.is-details-visible .food-card-content::before {
+      transform: translateY(0);
+    }
+
+    .food-card.is-active:hover .food-card-title,
+    .food-card.is-active:focus-visible .food-card-title,
+    .food-card.is-active.is-details-visible .food-card-title {
+      color: var(--accent);
+      transform: translateY(clamp(-78px, -6vw, -56px));
+    }
+
+    .food-card.is-active:hover .food-card-description,
+    .food-card.is-active:focus-visible .food-card-description,
+    .food-card.is-active.is-details-visible .food-card-description {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card-discovery-cue {
+      display: none;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .card-discovery-cue {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: max-content;
+        max-width: calc(100% - 40px);
+        margin: 15px auto 0;
+        color: rgba(211, 231, 222, 0.43);
+        font-size: 9px;
+        font-weight: 720;
+        letter-spacing: 0.17em;
+        text-transform: uppercase;
+        animation: discovery-breathe 3.4s ease-in-out infinite;
+        pointer-events: none;
+      }
+
+      .card-discovery-cue__track {
+        position: relative;
+        width: 34px;
+        height: 1px;
+        margin-right: 11px;
+        overflow: hidden;
+        background: rgba(184, 255, 218, 0.16);
+      }
+
+      .card-discovery-cue__track::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        transform: translateX(-110%);
+        animation: discovery-scan 2.8s ease-in-out infinite;
+      }
+
+      .card-discovery-cue__cursor {
+        width: 14px;
+        height: 14px;
+        margin-left: 8px;
+        color: rgba(184, 255, 218, 0.5);
+        transform: rotate(-12deg);
+      }
+    }
+
+    .food-carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(18px, 3vw, 32px);
+      margin-top: 24px;
+    }
+
+    .food-arrow {
+      display: grid;
+      place-items: center;
+      width: 56px;
+      height: 56px;
+      border: 1px solid rgba(184, 255, 218, 0.3);
+      border-radius: 50%;
+      background: rgba(7, 18, 16, 0.72);
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.08), 0 13px 34px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(12px);
+      cursor: pointer;
+      transition: color 280ms ease, background 280ms ease, transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .food-arrow:hover,
+    .food-arrow:focus-visible {
+      color: #07110e;
+      background: var(--accent);
+      transform: rotate(-8deg);
+      outline: none;
+    }
+
+    .food-arrow--next:hover,
+    .food-arrow--next:focus-visible {
+      transform: rotate(8deg);
+    }
+
+    .food-arrow svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .food-pagination {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .food-dot {
+      position: relative;
+      width: 26px;
+      height: 4px;
+      overflow: hidden;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      cursor: pointer;
+      transition: width 380ms ease;
+    }
+
+    .food-dot::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent-blue));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 480ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .food-dot.is-active {
+      width: 48px;
+    }
+
+    .food-dot.is-active::after {
+      transform: scaleX(1);
+    }
+
+    .food-counter {
+      min-width: 68px;
+      color: rgba(255, 255, 255, 0.54);
+      font-size: 9px;
+      font-weight: 750;
+      letter-spacing: 0.18em;
+      text-align: center;
+    }
+
+    /* More favorites navigation */
+    .favorites-navigation-section {
+      display: flex;
+      min-height: 100svh;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: clamp(140px, 15vh, 190px);
+      padding-bottom: clamp(70px, 10vh, 120px);
+    }
+
+    .favorites-navigation-section::before {
+      background:
+        radial-gradient(circle at var(--pointer-x) var(--pointer-y), rgba(184, 255, 218, 0.12), transparent 26%),
+        linear-gradient(115deg, rgba(8, 35, 27, 0.74), rgba(7, 18, 21, 0.56) 50%, rgba(12, 29, 50, 0.78));
+    }
+
+    .favorites-navigation-heading {
+      position: relative;
+      z-index: 2;
+      width: min(90vw, 980px);
+      margin: 0 auto clamp(38px, 6vh, 72px);
+      text-align: center;
+    }
+
+    .favorites-navigation-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 760;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .favorites-navigation-kicker::before,
+    .favorites-navigation-kicker::after {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(184, 255, 218, 0.72));
+    }
+
+    .favorites-navigation-kicker::after {
+      transform: scaleX(-1);
+    }
+
+    .favorites-navigation-title {
+      color: #fff;
+      font-size: clamp(42px, 6.2vw, 96px);
+      font-weight: 780;
+      letter-spacing: -0.065em;
+      line-height: 0.94;
+    }
+
+    .favorites-navigation-title .outline {
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(232, 241, 237, 0.46);
+    }
+
+    .favorites-navigation-copy {
+      max-width: 58ch;
+      margin: 22px auto 0;
+      color: rgba(220, 231, 226, 0.6);
+      font-size: clamp(14px, 1.35vw, 18px);
+      line-height: 1.65;
+    }
+
+    .favorites-navigation-grid {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      width: min(91vw, 1480px);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(20px, 3vw, 48px);
+      margin-inline: auto;
+    }
+
+    .favorites-nav-card {
+      position: relative;
+      min-height: clamp(430px, 38vw, 620px);
+      overflow: hidden;
+      border: 1px solid rgba(184, 255, 218, 0.22);
+      border-radius: clamp(28px, 3vw, 50px);
+      background:
+        radial-gradient(circle at 50% 18%, hsla(var(--card-hue), 55%, 32%, 0.22), transparent 42%),
+        linear-gradient(145deg, hsla(var(--card-hue), 45%, 13%, 0.98), rgba(6, 18, 22, 0.98));
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.08), 0 32px 80px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(45px);
+      transition:
+        opacity 720ms ease,
+        transform 560ms cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 350ms ease,
+        box-shadow 350ms ease;
+      contain: layout paint;
+      backface-visibility: hidden;
+      will-change: transform;
+    }
+
+    .favorites-navigation-section.is-visible .favorites-nav-card {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .favorites-nav-card__link {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(24px, 4vw, 50px);
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .favorites-nav-card__media,
+    .favorites-nav-card__media img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .favorites-nav-card__media img {
+      display: block;
+      object-fit: cover;
+      object-position: center;
+      transition: filter 600ms ease, transform 850ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .favorites-nav-card__media img:not([src]),
+    .favorites-nav-card__media img[src=""] {
+      display: none;
+    }
+
+    .favorites-nav-card__media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(3, 12, 12, 0.82), rgba(3, 12, 12, 0.18) 58%, rgba(3, 12, 12, 0.34));
+    }
+
+    .favorites-nav-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(145deg, hsla(var(--card-hue), 58%, 20%, 0.96), rgba(8, 24, 31, 0.98));
+      transform: translate3d(0, 102%, 0);
+      transition: transform 540ms cubic-bezier(0.16, 1, 0.3, 1);
+      backface-visibility: hidden;
+      will-change: transform;
+    }
+
+    .favorites-nav-card__title {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      font-size: clamp(36px, 4vw, 64px);
+      font-weight: 780;
+      letter-spacing: -0.055em;
+      line-height: 1;
+      text-align: center;
+      text-shadow: 0 12px 40px rgba(0, 0, 0, 0.64);
+      transition: color 350ms ease, transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .favorites-nav-card__cta {
+      position: absolute;
+      bottom: clamp(22px, 3vw, 34px);
+      left: 50%;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 44px;
+      padding: 8px 10px 8px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      color: rgba(242, 248, 245, 0.82);
+      background: rgba(7, 18, 17, 0.54);
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 12px 30px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(16px);
+      font-size: 9px;
+      font-weight: 760;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transform: translateX(-50%);
+    }
+
+    .favorites-nav-card__cta-icon {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      color: #07130f;
+      background: var(--accent);
+      font-size: 15px;
+      transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .favorites-nav-card--return::after {
+      content: "";
+      position: absolute;
+      inset: 8%;
+      border: 1px solid rgba(184, 255, 218, 0.12);
+      border-radius: inherit;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(184, 255, 218, 0.11), transparent 28%),
+        repeating-linear-gradient(90deg, transparent 0 46px, rgba(184, 255, 218, 0.025) 47px 48px);
+    }
+
+    .favorites-nav-card--return .favorites-nav-card__link { z-index: 4; }
+
+    .favorites-nav-card__return-glass {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      max-width: 100%;
+      padding: 17px 18px 17px 24px;
+      border: 1px solid rgba(184, 255, 218, 0.28);
+      border-radius: 999px;
+      color: #f5fbf8;
+      background: rgba(10, 28, 24, 0.48);
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.12), 0 18px 45px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(18px);
+      font-size: clamp(15px, 1.35vw, 19px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      transition: border-color 350ms ease, background 350ms ease, transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .favorites-nav-card__return-arrow {
+      display: grid;
+      flex: 0 0 auto;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      color: #07130f;
+      background: var(--accent);
+      transition: transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .favorites-navigation-section.is-visible .favorites-nav-card:hover,
+    .favorites-navigation-section.is-visible .favorites-nav-card:focus-within {
+      border-color: rgba(184, 255, 218, 0.5);
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 38px 95px rgba(0, 0, 0, 0.38);
+      transform: translateY(-8px) scale(1.018);
+    }
+
+    .favorites-nav-card:hover::before,
+    .favorites-nav-card:focus-within::before { transform: translateY(0); }
+
+    .favorites-nav-card:hover .favorites-nav-card__media img,
+    .favorites-nav-card:focus-within .favorites-nav-card__media img {
+      filter: brightness(0.55) saturate(0.82);
+      transform: scale(1.055);
+    }
+
+    .favorites-nav-card:hover .favorites-nav-card__title,
+    .favorites-nav-card:focus-within .favorites-nav-card__title {
+      color: var(--accent);
+      transform: translateY(-16px);
+    }
+
+    .favorites-nav-card:hover .favorites-nav-card__cta-icon,
+    .favorites-nav-card:focus-within .favorites-nav-card__cta-icon,
+    .favorites-nav-card--return:hover .favorites-nav-card__return-arrow,
+    .favorites-nav-card--return:focus-within .favorites-nav-card__return-arrow {
+      transform: rotate(45deg);
+    }
+
+    .favorites-nav-card--return:hover .favorites-nav-card__return-glass,
+    .favorites-nav-card--return:focus-within .favorites-nav-card__return-glass {
+      border-color: rgba(184, 255, 218, 0.52);
+      background: rgba(12, 40, 31, 0.66);
+      transform: translateY(-4px);
+    }
+
+    .favorites-nav-card__link:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: -7px;
+      border-radius: inherit;
+    }
+
+    .favorites-nav-card__return-copy {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .favorites-nav-card__return-eyebrow {
+      margin-bottom: 15px;
+      color: rgba(184, 255, 218, 0.62);
+      font-size: 9px;
+      font-weight: 760;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .favorites-nav-card__return-title {
+      margin-bottom: 36px;
+      color: #fff;
+      font-size: clamp(48px, 5vw, 76px);
+      font-weight: 780;
+      letter-spacing: -0.065em;
+      line-height: 0.9;
+      text-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+    }
+
+    .favorites-nav-card--return::before {
+      background:
+        radial-gradient(circle at 50% 36%, rgba(184, 255, 218, 0.18), transparent 32%),
+        linear-gradient(145deg, rgba(10, 55, 39, 0.96), rgba(7, 25, 26, 0.99));
+      transform: translateY(72%);
+    }
+
+    .favorites-nav-card--return:hover::before,
+    .favorites-nav-card--return:focus-within::before {
+      transform: translateY(0);
+    }
+
+    .favorites-nav-card--discover {
+      cursor: default;
+      outline: none;
+    }
+
+    .favorites-nav-card--discover::after {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      z-index: 2;
+      border: 1px solid rgba(184, 255, 218, 0.16);
+      border-radius: calc(clamp(28px, 3vw, 50px) - 12px);
+      opacity: 0;
+      transform: scale(0.965);
+      transition:
+        opacity 300ms ease,
+        transform 440ms cubic-bezier(0.16, 1, 0.3, 1);
+      backface-visibility: hidden;
+      will-change: opacity, transform;
+      pointer-events: none;
+    }
+
+    .favorites-nav-card--discover .favorites-nav-card__media {
+      background: linear-gradient(145deg, #0b1d17, hsl(var(--card-hue) 35% 13%));
+    }
+
+    .favorites-nav-card--discover .favorites-nav-card__media::before {
+      content: "";
+      position: absolute;
+      top: -20%;
+      bottom: -20%;
+      left: -55%;
+      z-index: 2;
+      width: 30%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.14), transparent);
+      transform: skewX(-18deg);
+      animation: navigation-card-invitation 4.8s 1.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .favorites-nav-card--discover .favorites-nav-card__media img {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      transition:
+        opacity 320ms ease,
+        transform 580ms cubic-bezier(0.16, 1, 0.3, 1);
+      backface-visibility: hidden;
+      will-change: opacity, transform;
+    }
+
+    .favorites-nav-card__content {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      padding: clamp(32px, 3vw, 48px);
+      pointer-events: none;
+    }
+
+    .favorites-nav-card--discover .favorites-nav-card__title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: clamp(32px, 3.4vw, 54px);
+      transform: translate(-50%, -50%);
+      transition:
+        top 540ms cubic-bezier(0.16, 1, 0.3, 1),
+        left 540ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 540ms cubic-bezier(0.16, 1, 0.3, 1),
+        font-size 400ms ease,
+        color 300ms ease;
+      backface-visibility: hidden;
+      will-change: top, left, transform;
+    }
+
+    .favorites-nav-card__number {
+      position: absolute;
+      top: 28px;
+      right: 30px;
+      color: rgba(184, 255, 218, 0.58);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 300ms 45ms ease, transform 420ms 35ms ease;
+    }
+
+    .favorites-nav-card__description {
+      position: absolute;
+      top: clamp(106px, 9vw, 138px);
+      right: clamp(32px, 3vw, 48px);
+      left: clamp(32px, 3vw, 48px);
+      max-width: 34ch;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: clamp(14px, 1.1vw, 17px);
+      line-height: 1.72;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 330ms 45ms ease, transform 460ms 35ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .favorites-nav-card--discover .favorites-nav-card__cta {
+      right: clamp(32px, 3vw, 48px);
+      bottom: clamp(34px, 3.4vw, 52px);
+      left: clamp(32px, 3vw, 48px);
+      justify-content: space-between;
+      min-height: 58px;
+      padding: 7px 8px 7px 22px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition:
+        opacity 360ms 70ms ease,
+        transform 500ms 55ms cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 280ms ease,
+        background 280ms ease;
+      pointer-events: none;
+    }
+
+    .favorites-nav-card__hint {
+      position: absolute;
+      bottom: 26px;
+      left: 50%;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: max-content;
+      max-width: calc(100% - 40px);
+      min-height: 42px;
+      padding: 8px 13px;
+      border: 1px solid rgba(184, 255, 218, 0.32);
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.9);
+      background: rgba(4, 14, 12, 0.68);
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 12px 30px rgba(0, 0, 0, 0.3), 0 0 24px rgba(184, 255, 218, 0.08);
+      backdrop-filter: blur(13px) saturate(130%);
+      font-size: 9px;
+      font-weight: 750;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transform: translateX(-50%);
+      animation: navigation-hint-pulse 2.6s ease-in-out infinite;
+      transition: opacity 280ms ease, transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .favorites-nav-card__hint::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 14px rgba(184, 255, 218, 0.8);
+    }
+
+    .favorites-nav-card__hint::after {
+      content: "\2197";
+      display: grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      margin-left: 2px;
+      border-radius: 50%;
+      color: #07110e;
+      background: var(--accent);
+      font-size: 13px;
+      letter-spacing: 0;
+    }
+
+    .favorites-navigation-section.is-visible .favorites-nav-card--discover:hover,
+    .favorites-navigation-section.is-visible .favorites-nav-card--discover:focus-within,
+    .favorites-navigation-section.is-visible .favorites-nav-card--discover.is-open {
+      border-color: rgba(184, 255, 218, 0.42);
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.08), 0 32px 80px rgba(0, 0, 0, 0.3);
+      transform: translateY(-9px) scale(1.025) translateZ(0);
+    }
+
+    .favorites-nav-card--discover:hover::before,
+    .favorites-nav-card--discover:focus-within::before,
+    .favorites-nav-card--discover.is-open::before {
+      transform: translate3d(0, 0, 0);
+    }
+
+    .favorites-nav-card--discover:hover::after,
+    .favorites-nav-card--discover:focus-within::after,
+    .favorites-nav-card--discover.is-open::after {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .favorites-nav-card--discover:hover .favorites-nav-card__media img,
+    .favorites-nav-card--discover:focus-within .favorites-nav-card__media img,
+    .favorites-nav-card--discover.is-open .favorites-nav-card__media img {
+      opacity: 0;
+      filter: none;
+      transform: translate3d(0, 0, 0) scale(1.075);
+    }
+
+    .favorites-nav-card--discover:hover .favorites-nav-card__media::before,
+    .favorites-nav-card--discover:focus-within .favorites-nav-card__media::before,
+    .favorites-nav-card--discover.is-open .favorites-nav-card__media::before {
+      opacity: 0;
+      animation-play-state: paused;
+    }
+
+    .favorites-nav-card--discover:hover .favorites-nav-card__title,
+    .favorites-nav-card--discover:focus-within .favorites-nav-card__title,
+    .favorites-nav-card--discover.is-open .favorites-nav-card__title {
+      top: clamp(42px, 4vw, 58px);
+      left: clamp(32px, 3vw, 48px);
+      color: #fff;
+      font-size: clamp(30px, 3vw, 46px);
+      text-shadow: none;
+      transform: translate(0, 0);
+    }
+
+    .favorites-nav-card--discover:hover .favorites-nav-card__description,
+    .favorites-nav-card--discover:focus-within .favorites-nav-card__description,
+    .favorites-nav-card--discover.is-open .favorites-nav-card__description,
+    .favorites-nav-card--discover:hover .favorites-nav-card__number,
+    .favorites-nav-card--discover:focus-within .favorites-nav-card__number,
+    .favorites-nav-card--discover.is-open .favorites-nav-card__number {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .favorites-nav-card--discover:hover .favorites-nav-card__cta,
+    .favorites-nav-card--discover:focus-within .favorites-nav-card__cta,
+    .favorites-nav-card--discover.is-open .favorites-nav-card__cta {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .favorites-nav-card--discover:hover .favorites-nav-card__hint,
+    .favorites-nav-card--discover:focus-within .favorites-nav-card__hint,
+    .favorites-nav-card--discover.is-open .favorites-nav-card__hint {
+      opacity: 0;
+      transform: translate(-50%, 10px);
+    }
+
+    .favorites-nav-card--discover .favorites-nav-card__cta:hover,
+    .favorites-nav-card--discover .favorites-nav-card__cta:focus-visible {
+      border-color: rgba(184, 255, 218, 0.65);
+      background: rgba(184, 255, 218, 0.1);
+      outline: none;
+    }
+
+    .favorites-nav-card--discover .favorites-nav-card__cta:hover .favorites-nav-card__cta-icon,
+    .favorites-nav-card--discover .favorites-nav-card__cta:focus-visible .favorites-nav-card__cta-icon {
+      background: #fff;
+      transform: rotate(45deg);
+    }
+
+    @keyframes navigation-card-invitation {
+      0%, 64% { left: -55%; }
+      86%, 100% { left: 130%; }
+    }
+
+    @keyframes navigation-hint-pulse {
+      0%, 100% { box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), 0 12px 30px rgba(0, 0, 0, 0.3), 0 0 18px rgba(184, 255, 218, 0.04); }
+      50% { box-shadow: inset 0 1px rgba(255, 255, 255, 0.12), 0 12px 30px rgba(0, 0, 0, 0.3), 0 0 28px rgba(184, 255, 218, 0.13); }
+    }
+
+    @keyframes discovery-breathe {
+      0%,
+      100% { opacity: 0.58; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(-2px); }
+    }
+
+    @keyframes discovery-scan {
+      0%,
+      25% { transform: translateX(-110%); }
+      75%,
+      100% { transform: translateX(110%); }
+    }
+
+    @keyframes header-arrive {
+      from { opacity: 0; transform: translateY(-18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes orbit-turn {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 760px) {
+      .site-header {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        padding: 18px 20px 0;
+      }
+
+      .logo {
+        width: 50px;
+        height: 42px;
+        border-radius: 13px;
+        font-size: 12px;
+      }
+
+      .site-nav {
+        order: 2;
+        flex-basis: 100%;
+        justify-content: space-between;
+        gap: 1px;
+        padding: 5px;
+        overflow-x: auto;
+        scrollbar-width: none;
+        transform: none;
+      }
+
+      .site-header.is-past-foods .site-nav {
+        transform: none;
+      }
+
+      .site-nav::-webkit-scrollbar { display: none; }
+
+      .nav-item {
+        min-height: 38px;
+        padding: 0 clamp(10px, 3vw, 16px);
+        font-size: 11px;
+      }
+
+      .food-section {
+        min-height: 100svh;
+        padding-top: 132px;
+      }
+
+      .page-title {
+        font-size: clamp(58px, 17vw, 92px);
+      }
+
+      .section-title {
+        font-size: clamp(32px, 9vw, 48px);
+      }
+
+      .food-carousel-viewport {
+        height: clamp(390px, 115vw, 520px);
+      }
+
+      .food-card {
+        width: min(76vw, 520px);
+        border-radius: 32px;
+      }
+
+      .food-card.is-prev {
+        transform: translateX(calc(-50% - 72vw)) scale(0.76) rotateY(6deg);
+      }
+
+      .food-card.is-next {
+        transform: translateX(calc(-50% + 72vw)) scale(0.76) rotateY(-6deg);
+      }
+
+      .food-card-title {
+        font-size: clamp(36px, 11vw, 58px);
+      }
+
+      .food-card.is-active {
+        cursor: default;
+      }
+
+      .food-card.is-active .food-card-media img {
+        filter: saturate(0.94) contrast(1.03) brightness(0.86);
+        transform: scale(1.025);
+      }
+
+      .food-card.is-active .food-card-content::before {
+        height: 56%;
+        transform: translateY(0);
+      }
+
+      .food-card.is-active .food-card-title {
+        color: var(--accent);
+        transform: translateY(-56px);
+      }
+
+      .food-card.is-active .food-card-description {
+        right: 24px;
+        bottom: 24px;
+        left: 24px;
+        font-size: clamp(12px, 3.45vw, 14px);
+        line-height: 1.42;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .section-orbit {
+        width: 155vw;
+      }
+
+      .favorites-navigation-section {
+        padding-top: 146px;
+      }
+
+      .favorites-navigation-heading {
+        margin-bottom: 34px;
+      }
+
+      .favorites-navigation-grid {
+        width: min(86vw, 520px);
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .favorites-nav-card {
+        min-height: 440px;
+        border-radius: 34px;
+        opacity: 1;
+        transform: none;
+      }
+
+      .favorites-nav-card::before {
+        transform: translateY(68%);
+      }
+
+      .favorites-nav-card__cta {
+        bottom: 24px;
+      }
+
+      .favorites-nav-card--return {
+        min-height: 330px;
+      }
+
+      .favorites-nav-card--discover::before {
+        transform: translate3d(0, 102%, 0);
+      }
+
+      .favorites-nav-card--discover {
+        cursor: pointer;
+      }
+
+      .favorites-nav-card--discover .favorites-nav-card__content {
+        padding: 30px;
+      }
+
+      .favorites-nav-card--discover .favorites-nav-card__description {
+        top: 108px;
+        right: 30px;
+        left: 30px;
+        font-size: 15px;
+      }
+
+      .favorites-nav-card--discover .favorites-nav-card__cta {
+        right: 30px;
+        bottom: 32px;
+        left: 30px;
+      }
+
+      .favorites-nav-card--discover:hover,
+      .favorites-nav-card--discover:focus-within,
+      .favorites-nav-card--discover.is-open {
+        transform: translateY(-7px) scale(1.015) translateZ(0);
+      }
+    }
+
+    @media (max-width: 430px) {
+      .food-section {
+        padding-bottom: 62px;
+      }
+
+      .section-heading {
+        margin-bottom: 30px;
+      }
+
+      .page-title {
+        margin-bottom: 24px;
+      }
+
+      .section-subtitle {
+        max-width: 34ch;
+      }
+
+      .food-carousel-viewport {
+        height: 410px;
+      }
+
+      .food-card {
+        width: 78vw;
+      }
+
+      .food-card.is-prev {
+        transform: translateX(calc(-50% - 75vw)) scale(0.74);
+      }
+
+      .food-card.is-next {
+        transform: translateX(calc(-50% + 75vw)) scale(0.74);
+      }
+
+      .food-arrow {
+        width: 48px;
+        height: 48px;
+      }
+
+      .food-carousel-controls {
+        gap: 13px;
+      }
+
+      .food-dot {
+        width: 17px;
+      }
+
+      .food-dot.is-active {
+        width: 32px;
+      }
+
+      .food-counter {
+        min-width: 56px;
+        font-size: 8px;
+      }
+
+      .favorites-navigation-title {
+        font-size: clamp(46px, 14vw, 68px);
+      }
+
+      .favorites-navigation-copy {
+        max-width: 34ch;
+      }
+
+      .favorites-navigation-grid {
+        width: 84vw;
+      }
+
+      .favorites-nav-card {
+        min-height: 390px;
+      }
+
+      .favorites-nav-card--return {
+        min-height: 280px;
+      }
+
+      .favorites-nav-card__return-glass {
+        gap: 11px;
+        padding: 13px 13px 13px 19px;
+        font-size: 14px;
+      }
+
+      .favorites-nav-card__return-arrow {
+        width: 34px;
+        height: 34px;
+      }
+
+      .favorites-nav-card__return-title {
+        margin-bottom: 28px;
+        font-size: 50px;
+      }
+
+      .favorites-nav-card__hint {
+        bottom: 22px;
+        font-size: 8px;
+        letter-spacing: 0.11em;
+      }
+
+      .favorites-nav-card--discover .favorites-nav-card__description {
+        top: 100px;
+        right: 25px;
+        left: 25px;
+        font-size: 14px;
+        line-height: 1.58;
+      }
+
+      .favorites-nav-card--discover .favorites-nav-card__cta {
+        right: 24px;
+        bottom: 28px;
+        left: 24px;
+        min-height: 54px;
+        padding-left: 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html" aria-label="Shaun Adriel Torres, home">SAT</a>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a class="nav-item" href="gallery.html">Gallery</a>
+      <a class="nav-item" href="about.html" aria-current="page">About Me</a>
+      <a class="nav-item" href="projects.html">Projects</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="food-section" id="foods" data-word="FOODS" style="--section-hue: 152" aria-labelledby="foods-heading">
+      <span class="section-orbit" aria-hidden="true"></span>
+      <div class="section-heading">
+        <h1 class="page-title">Favorite <span class="outline">Foods</span></h1>
+        <p class="section-label">01 &nbsp; At home</p>
+        <h2 class="section-title" id="foods-heading">Homemade &amp; Overall Foods</h2>
+        <p class="section-subtitle">These are my top 4 favorite foods that is usually cooked at home, or just a general cuisine.</p>
+      </div>
+
+      <div class="food-carousel" id="foods-carousel" data-category="foods" aria-label="Favorite homemade foods carousel">
+        <div class="food-carousel-viewport" id="foods-carousel-viewport" tabindex="0" role="region" aria-roledescription="carousel">
+          <article class="food-card" id="food-pork-steak" data-title="Pork Steak" aria-describedby="food-pork-steak-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="Porksteak.jpg" alt="Pork steak">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">01 / 04</span>
+              <h3 class="food-card-title">Pork Steak</h3>
+              <p class="food-card-description" id="food-pork-steak-description">Pork steak is my top 1 overall favorite food. My grandmother's and mother's way of cooking porksteak is my standard. I like it cooked a bit salty and the pork is not too thin.</p>
+            </div>
+          </article>
+
+          <article class="food-card" id="food-sisig" data-title="Sisig" aria-describedby="food-sisig-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="sisig.jpg" alt="Sisig">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">02 / 04</span>
+              <h3 class="food-card-title">Sisig</h3>
+              <p class="food-card-description" id="food-sisig-description">I consider sisig to be one of my top two favorite foods overall. What I particularly love about sisig is how versatile it is, I can enjoy it almost anywhere and in many different forms. Whether it’s the canned version, something served at a restaurant, or a homemade dish prepared at home, sisig always manages to be a satisfying choice.</p>
+            </div>
+          </article>
+
+          <article class="food-card" id="food-adobo" data-title="Adobo" aria-describedby="food-adobo-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="ado.jpg" alt="Adobo">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">03 / 04</span>
+              <h3 class="food-card-title">Adobo</h3>
+              <p class="food-card-description" id="food-adobo-description">Adobo is a versatile dish that can be cooked in many different ways. It can be cooked as a chicken adobo,pork adobo or even combines. It can also be cooked as as salty and sweet and salty</p>
+            </div>
+          </article>
+
+          <article class="food-card" id="food-dinuguan" data-title="Dinuguan" aria-describedby="food-dinuguan-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="dinugan.jpg" alt="Dinuguan">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">04 / 04</span>
+              <h3 class="food-card-title">Dinuguan</h3>
+              <p class="food-card-description" id="food-dinuguan-description">Dinuguan is not usually cooked at home frequently but more found on special days such as birthdays, fiesta and more. Whenever there is an event and there are dinuguan, I always pick that as my first main dish</p>
+            </div>
+          </article>
+        </div>
+        <div class="food-carousel-controls" id="foods-carousel-controls"></div>
+        <div class="card-discovery-cue" aria-hidden="true">
+          <span class="card-discovery-cue__track"></span>
+          <span>Hover to uncover the story</span>
+          <svg class="card-discovery-cue__cursor" viewBox="0 0 20 20" fill="none">
+            <path d="M4 2.5 15.5 10l-5.2 1.2-2.1 5.1L4 2.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="food-section" id="restaurants" data-word="RESTAURANTS" style="--section-hue: 172" aria-labelledby="restaurants-heading">
+      <span class="section-orbit" aria-hidden="true"></span>
+      <div class="section-heading">
+        <p class="section-label">02 &nbsp; Going out</p>
+        <h2 class="section-title" id="restaurants-heading">Favorite Restaurants</h2>
+        <p class="section-subtitle">These are my favorite go-to restaurants if I'm outside and an alternative when there's no food at home</p>
+      </div>
+
+      <div class="food-carousel" id="restaurants-carousel" data-category="restaurants" aria-label="Favorite restaurants carousel">
+        <div class="food-carousel-viewport" id="restaurants-carousel-viewport" tabindex="0" role="region" aria-roledescription="carousel">
+          <article class="food-card" id="restaurant-kfc" data-title="KFC" aria-describedby="restaurant-kfc-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="kfc.png" alt="KFC">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">01 / 04</span>
+              <h3 class="food-card-title">KFC</h3>
+              <p class="food-card-description" id="restaurant-kfc-description">KFC is a top 1 choice for alternative food whether Im going out or when there's no food at home. My usual at kfc is the spicy fried chicken and the ala king zinger steak.</p>
+            </div>
+          </article>
+
+          <article class="food-card" id="restaurant-jollibee" data-title="Jollibee" aria-describedby="restaurant-jollibee-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="jabi.jpg" alt="Jollibee">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">02 / 04</span>
+              <h3 class="food-card-title">Jollibee</h3>
+              <p class="food-card-description" id="restaurant-jollibee-description">Jollibee is a good 2nd alternative when KFC is not available. My go-to food in Jollibee is a double pc. burger steak w/ fries and spaghetti</p>
+            </div>
+          </article>
+
+          <article class="food-card" id="restaurant-mang-inasal" data-title="Mang Inasal" aria-describedby="restaurant-mang-inasal-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="man.png" alt="Mang Inasal">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">03 / 04</span>
+              <h3 class="food-card-title">Mang Inasal</h3>
+              <p class="food-card-description" id="restaurant-mang-inasal-description">Mang Inasal is always there for me to go for. The unli rice and the chicken oil combo is on top but I dont always go for it since it can be unhealthy when your always eating salty and oily foods</p>
+            </div>
+          </article>
+
+          <article class="food-card" id="restaurant-botejyu" data-title="Botejyu" aria-describedby="restaurant-botejyu-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="bote.png" alt="Botejyu">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">04 / 04</span>
+              <h3 class="food-card-title">Botejyu</h3>
+              <p class="food-card-description" id="restaurant-botejyu-description">Botejyu is last on my favorites for it's not always accessible and not practical to go for frequently for it's price. Though we always go for it when family bonding. My favorite dish is the tonkatsu curry</p>
+            </div>
+          </article>
+        </div>
+        <div class="food-carousel-controls" id="restaurants-carousel-controls"></div>
+        <div class="card-discovery-cue" aria-hidden="true">
+          <span class="card-discovery-cue__track"></span>
+          <span>Hover to uncover the story</span>
+          <svg class="card-discovery-cue__cursor" viewBox="0 0 20 20" fill="none">
+            <path d="M4 2.5 15.5 10l-5.2 1.2-2.1 5.1L4 2.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="food-section" id="sweets-snacks" data-word="SWEETS" style="--section-hue: 195" aria-labelledby="sweets-snacks-heading">
+      <span class="section-orbit" aria-hidden="true"></span>
+      <div class="section-heading">
+        <p class="section-label">03 &nbsp; Small cravings</p>
+        <h2 class="section-title" id="sweets-snacks-heading">Sweets &amp; Snacks</h2>
+        <p class="section-subtitle">Quick favorites for quiet afternoons, late nights, and everything in between</p>
+      </div>
+
+      <div class="food-carousel" id="sweets-snacks-carousel" data-category="sweets-snacks" aria-label="Favorite sweets and snacks carousel">
+        <div class="food-carousel-viewport" id="sweets-snacks-carousel-viewport" tabindex="0" role="region" aria-roledescription="carousel">
+          <article class="food-card" id="snack-piattos" data-title="Piattos" aria-describedby="snack-piattos-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="piattos.webp" alt="Piattos">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">01 / 04</span>
+              <h3 class="food-card-title">Piattos</h3>
+              <p class="food-card-description" id="snack-piattos-description">My go-to snack whether I'm watching a movie or just hungry at the moment but dont want a heavy meal</p>
+            </div>
+          </article>
+
+          <article class="food-card" id="snack-loaded" data-title="Loaded" aria-describedby="snack-loaded-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="load.webp" alt="Loaded">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">02 / 04</span>
+              <h3 class="food-card-title">Loaded</h3>
+              <p class="food-card-description" id="snack-loaded-description">My 2nd favorite snack when I dont want a heavy meal at the moment</p>
+            </div>
+          </article>
+
+          <article class="food-card" id="snack-oreo" data-title="Oreo" aria-describedby="snack-oreo-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="oreo.jpg" alt="Oreo">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">03 / 04</span>
+              <h3 class="food-card-title">Oreo</h3>
+              <p class="food-card-description" id="snack-oreo-description">One of my favorite sweet foods. Always binge on it whenever available</p>
+            </div>
+          </article>
+
+          <article class="food-card" id="snack-stick-o" data-title="Stick-O" aria-describedby="snack-stick-o-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="stik.jpg" alt="Stick-O">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">04 / 04</span>
+              <h3 class="food-card-title">Stick-O</h3>
+              <p class="food-card-description" id="snack-stick-o-description">Also one of my favorite sweet foods but rather just 2nd to oreo since it can be too sweet sometimes</p>
+            </div>
+          </article>
+        </div>
+        <div class="food-carousel-controls" id="sweets-snacks-carousel-controls"></div>
+        <div class="card-discovery-cue" aria-hidden="true">
+          <span class="card-discovery-cue__track"></span>
+          <span>Hover to uncover the story</span>
+          <svg class="card-discovery-cue__cursor" viewBox="0 0 20 20" fill="none">
+            <path d="M4 2.5 15.5 10l-5.2 1.2-2.1 5.1L4 2.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="food-section" id="drinks" data-word="DRINKS" style="--section-hue: 218" aria-labelledby="drinks-heading">
+      <span class="section-orbit" aria-hidden="true"></span>
+      <div class="section-heading">
+        <p class="section-label">04 &nbsp; Something refreshing</p>
+        <h2 class="section-title" id="drinks-heading">Favorite Drinks</h2>
+        <p class="section-subtitle">These are the drinks I usually go for when I have extra money or just wants a refresh for the day</p>
+      </div>
+
+      <div class="food-carousel" id="drinks-carousel" data-category="drinks" aria-label="Favorite drinks carousel">
+        <div class="food-carousel-viewport" id="drinks-carousel-viewport" tabindex="0" role="region" aria-roledescription="carousel">
+          <article class="food-card" id="drink-spanish-latte" data-title="Spanish Latte" aria-describedby="drink-spanish-latte-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="spani.jpg" alt="Spanish latte">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">01 / 04</span>
+              <h3 class="food-card-title">Spanish Latte</h3>
+              <p class="food-card-description" id="drink-spanish-latte-description">My top, go-to, favorite drink. It is my top option whenever I'm buying in a cafe or any drinks store like starbucks and such</p>
+            </div>
+          </article>
+
+          <article class="food-card" id="drink-mojito" data-title="Mojito" aria-describedby="drink-mojito-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="mojito.jpg" alt="Mojito">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">02 / 04</span>
+              <h3 class="food-card-title">Mojito</h3>
+              <p class="food-card-description" id="drink-mojito-description">Included an alcohol here since why not. One of my favorite alcohol to drink whenever there's a special event like birthdays, christmas and more</p>
+            </div>
+          </article>
+
+          <article class="food-card" id="drink-royal" data-title="Royal" aria-describedby="drink-royal-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="royal.jpg" alt="Royal soft drink">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">03 / 04</span>
+              <h3 class="food-card-title">Royal</h3>
+              <p class="food-card-description" id="drink-royal-description">Royal is my pick whenever i want a refresh for the day usually after basketball, just got home after a hot summer day. Also a usual go for drink whenever there's an event</p>
+            </div>
+          </article>
+
+          <article class="food-card" id="drink-chuckie" data-title="Chuckie" aria-describedby="drink-chuckie-description" aria-expanded="false">
+            <div class="food-card-media">
+              <img src="chuck.jpg" alt="Chuckie chocolate drink">
+            </div>
+            <div class="food-card-content">
+              <span class="food-card-number">04 / 04</span>
+              <h3 class="food-card-title">Chuckie</h3>
+              <p class="food-card-description" id="drink-chuckie-description">My favorite cheap chocolate drink. Always buying a 6pcs or 1 gallon and its gone after 3 days.</p>
+            </div>
+          </article>
+        </div>
+        <div class="food-carousel-controls" id="drinks-carousel-controls"></div>
+        <div class="card-discovery-cue" aria-hidden="true">
+          <span class="card-discovery-cue__track"></span>
+          <span>Hover to uncover the story</span>
+          <svg class="card-discovery-cue__cursor" viewBox="0 0 20 20" fill="none">
+            <path d="M4 2.5 15.5 10l-5.2 1.2-2.1 5.1L4 2.5Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="food-section favorites-navigation-section"
+      id="more-favorites"
+      data-word="EXPLORE"
+      style="--section-hue: 168"
+      aria-labelledby="more-favorites-heading"
+    >
+      <span class="section-orbit" aria-hidden="true"></span>
+
+      <div class="favorites-navigation-heading">
+        <p class="favorites-navigation-kicker">Continue exploring</p>
+        <h2 class="favorites-navigation-title" id="more-favorites-heading">
+          More <span class="outline">Favorites</span>
+        </h2>
+        <p class="favorites-navigation-copy">
+          Return to the complete favorites collection or continue discovering the games and music that inspire me.
+        </p>
+      </div>
+
+      <div class="favorites-navigation-grid">
+        <article class="favorites-nav-card favorites-nav-card--return" style="--card-hue: 158">
+          <a
+            class="favorites-nav-card__link"
+            href="about.html"
+            aria-label="Return to the main section of the About page"
+          >
+            <span class="favorites-nav-card__return-copy">
+              <span class="favorites-nav-card__return-eyebrow">Back to the beginning</span>
+              <span class="favorites-nav-card__return-title">About Me</span>
+              <span class="favorites-nav-card__return-glass">
+                Return to About page
+                <span class="favorites-nav-card__return-arrow" aria-hidden="true">&#8599;</span>
+              </span>
+            </span>
+          </a>
+        </article>
+
+        <article
+          class="favorites-nav-card favorites-nav-card--discover"
+          style="--card-hue: 188"
+          tabindex="0"
+          aria-expanded="false"
+        >
+          <div class="favorites-nav-card__media" aria-hidden="true">
+            <img src="Val.jpg" alt="Valorant">
+          </div>
+          <div class="favorites-nav-card__content">
+            <span class="favorites-nav-card__number">02 / 03</span>
+            <h3 class="favorites-nav-card__title">Games</h3>
+            <p class="favorites-nav-card__description">
+              A closer look at the games I enjoy, the worlds I explore, and what I usually play in my free time.
+            </p>
+            <a class="favorites-nav-card__cta" href="games.html">
+              Discover more
+              <span class="favorites-nav-card__cta-icon" aria-hidden="true">&#8599;</span>
+            </a>
+          </div>
+          <span class="favorites-nav-card__hint">Hover or tap to discover</span>
+        </article>
+
+        <article
+          class="favorites-nav-card favorites-nav-card--discover"
+          style="--card-hue: 220"
+          tabindex="0"
+          aria-expanded="false"
+        >
+          <div class="favorites-nav-card__media" aria-hidden="true">
+            <img src="Pnd.jpg" alt="PartyNextDoor">
+          </div>
+          <div class="favorites-nav-card__content">
+            <span class="favorites-nav-card__number">03 / 03</span>
+            <h3 class="favorites-nav-card__title">Music</h3>
+            <p class="favorites-nav-card__description">
+              Discover the artists, songs, and sounds that stay in my rotation and shape my everyday mood.
+            </p>
+            <a class="favorites-nav-card__cta" href="music.html">
+              Discover more
+              <span class="favorites-nav-card__cta-icon" aria-hidden="true">&#8599;</span>
+            </a>
+          </div>
+          <span class="favorites-nav-card__hint">Hover or tap to discover</span>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const detailsAreAlwaysVisible = window.matchMedia("(max-width: 760px)");
+    const sections = [...document.querySelectorAll(".food-section")];
+    const siteHeader = document.querySelector(".site-header");
+    const foodsSection = document.querySelector("#foods");
+
+    let navigationFrameRequested = false;
+
+    const updateNavigationPosition = () => {
+      const sectionHasExited = foodsSection.getBoundingClientRect().bottom
+        <= siteHeader.offsetHeight + 20;
+
+      siteHeader.classList.toggle("is-past-foods", sectionHasExited);
+      navigationFrameRequested = false;
+    };
+
+    const requestNavigationUpdate = () => {
+      if (navigationFrameRequested) return;
+
+      navigationFrameRequested = true;
+      window.requestAnimationFrame(updateNavigationPosition);
+    };
+
+    window.addEventListener("scroll", requestNavigationUpdate, { passive: true });
+    window.addEventListener("resize", requestNavigationUpdate);
+    updateNavigationPosition();
+
+    const arrowIcon = (direction) => direction === "previous"
+      ? '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m15 5-7 7 7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+    document.querySelectorAll(".food-carousel").forEach((carousel) => {
+      const viewport = carousel.querySelector(".food-carousel-viewport");
+      const cards = [...carousel.querySelectorAll(".food-card")];
+      const controls = carousel.querySelector(".food-carousel-controls");
+      let currentIndex = 0;
+      let touchStartX = 0;
+      let transitionLocked = false;
+
+      controls.innerHTML = `
+        <button class="food-arrow food-arrow--prev" type="button" aria-label="Previous card">${arrowIcon("previous")}</button>
+        <div class="food-pagination" role="tablist" aria-label="Choose a card">
+          ${cards.map((_, index) => `<button class="food-dot" type="button" role="tab" aria-label="Show card ${index + 1}" aria-selected="false"></button>`).join("")}
+        </div>
+        <span class="food-counter" aria-live="polite"></span>
+        <button class="food-arrow food-arrow--next" type="button" aria-label="Next card">${arrowIcon("next")}</button>
+      `;
+
+      const previousButton = controls.querySelector(".food-arrow--prev");
+      const nextButton = controls.querySelector(".food-arrow--next");
+      const dots = [...controls.querySelectorAll(".food-dot")];
+      const counter = controls.querySelector(".food-counter");
+
+      const render = () => {
+        cards.forEach((card, index) => {
+          const offset = (index - currentIndex + cards.length) % cards.length;
+          const isActive = offset === 0;
+          const isNext = offset === 1;
+          const isPrevious = offset === cards.length - 1;
+
+          card.classList.toggle("is-active", isActive);
+          card.classList.toggle("is-next", isNext);
+          card.classList.toggle("is-prev", isPrevious);
+          card.setAttribute("aria-hidden", String(!isActive));
+          card.tabIndex = isActive ? 0 : -1;
+
+          if (!isActive) {
+            card.classList.remove("is-details-visible");
+            card.setAttribute("aria-expanded", "false");
+          } else if (detailsAreAlwaysVisible.matches) {
+            card.classList.remove("is-details-visible");
+            card.setAttribute("aria-expanded", "true");
+          } else {
+            card.setAttribute(
+              "aria-expanded",
+              String(card.classList.contains("is-details-visible"))
+            );
+          }
+        });
+
+        dots.forEach((dot, index) => {
+          const isCurrent = index === currentIndex;
+          dot.classList.toggle("is-active", isCurrent);
+          dot.setAttribute("aria-selected", String(isCurrent));
+        });
+
+        counter.textContent = `${String(currentIndex + 1).padStart(2, "0")} / ${String(cards.length).padStart(2, "0")}`;
+      };
+
+      const navigate = (nextIndex) => {
+        const normalizedIndex = (nextIndex + cards.length) % cards.length;
+        if (normalizedIndex === currentIndex || transitionLocked) return;
+
+        currentIndex = normalizedIndex;
+        transitionLocked = true;
+        render();
+
+        window.setTimeout(() => {
+          transitionLocked = false;
+        }, reduceMotion.matches ? 20 : 770);
+      };
+
+      previousButton.addEventListener("click", () => navigate(currentIndex - 1));
+      nextButton.addEventListener("click", () => navigate(currentIndex + 1));
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => navigate(index));
+      });
+
+      const toggleCardDetails = (card) => {
+        if (detailsAreAlwaysVisible.matches) return;
+
+        const isOpen = card.classList.toggle("is-details-visible");
+        card.setAttribute("aria-expanded", String(isOpen));
+      };
+
+      cards.forEach((card, index) => {
+        card.addEventListener("click", () => {
+          const isSidePreview = card.classList.contains("is-prev") || card.classList.contains("is-next");
+
+          if (isSidePreview) {
+            navigate(index);
+            return;
+          }
+
+          if (card.classList.contains("is-active")) {
+            toggleCardDetails(card);
+          }
+        });
+
+        card.addEventListener("keydown", (event) => {
+          if (!card.classList.contains("is-active")) return;
+          if (event.key !== "Enter" && event.key !== " ") return;
+
+          event.preventDefault();
+          toggleCardDetails(card);
+        });
+      });
+
+      viewport.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowLeft") {
+          event.preventDefault();
+          navigate(currentIndex - 1);
+        }
+
+        if (event.key === "ArrowRight") {
+          event.preventDefault();
+          navigate(currentIndex + 1);
+        }
+      });
+
+      viewport.addEventListener("touchstart", (event) => {
+        touchStartX = event.changedTouches[0].clientX;
+      }, { passive: true });
+
+      viewport.addEventListener("touchend", (event) => {
+        const distance = event.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(distance) < 45) return;
+        navigate(currentIndex + (distance < 0 ? 1 : -1));
+      }, { passive: true });
+
+      render();
+    });
+
+    const discoveryCards = [...document.querySelectorAll(".favorites-nav-card--discover")];
+    const mobileDiscovery = window.matchMedia("(max-width: 760px)");
+
+    const closeDiscoveryCard = (card) => {
+      card.classList.remove("is-open");
+      card.setAttribute("aria-expanded", "false");
+    };
+
+    const syncDiscoveryInteraction = () => {
+      discoveryCards.forEach((card) => {
+        if (mobileDiscovery.matches) {
+          card.tabIndex = 0;
+          return;
+        }
+
+        card.removeAttribute("tabindex");
+        closeDiscoveryCard(card);
+        card.blur();
+      });
+    };
+
+    const toggleDiscoveryCard = (selectedCard) => {
+      discoveryCards.forEach((card) => {
+        if (card !== selectedCard) {
+          closeDiscoveryCard(card);
+        }
+      });
+
+      const isOpen = selectedCard.classList.toggle("is-open");
+      selectedCard.setAttribute("aria-expanded", String(isOpen));
+    };
+
+    discoveryCards.forEach((card) => {
+      card.addEventListener("pointerdown", (event) => {
+        const clickedCta = event.target.closest(".favorites-nav-card__cta");
+
+        if (mobileDiscovery.matches || clickedCta) return;
+
+        event.preventDefault();
+        closeDiscoveryCard(card);
+        card.blur();
+      });
+
+      card.addEventListener("click", (event) => {
+        if (event.target.closest(".favorites-nav-card__cta")) return;
+        if (!mobileDiscovery.matches) return;
+
+        toggleDiscoveryCard(card);
+      });
+
+      card.addEventListener("keydown", (event) => {
+        if (!mobileDiscovery.matches) return;
+        if (event.key !== "Enter" && event.key !== " ") return;
+        if (event.target.closest(".favorites-nav-card__cta")) return;
+
+        event.preventDefault();
+        toggleDiscoveryCard(card);
+      });
+
+      card.addEventListener("mouseleave", () => {
+        if (mobileDiscovery.matches) return;
+
+        closeDiscoveryCard(card);
+        card.blur();
+      });
+    });
+
+    if (typeof mobileDiscovery.addEventListener === "function") {
+      mobileDiscovery.addEventListener("change", syncDiscoveryInteraction);
+    } else {
+      mobileDiscovery.addListener(syncDiscoveryInteraction);
+    }
+
+    syncDiscoveryInteraction();
+
+    document.querySelectorAll('.favorites-nav-card__cta[href="#"]').forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+      });
+    });
+
+    if ("IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("is-visible");
+        });
+      }, { threshold: 0.18 });
+
+      sections.forEach((section) => revealObserver.observe(section));
+    } else {
+      sections.forEach((section) => section.classList.add("is-visible"));
+    }
+
+    sections.forEach((section) => {
+      section.addEventListener("pointermove", (event) => {
+        if (reduceMotion.matches || event.pointerType === "touch") return;
+        const bounds = section.getBoundingClientRect();
+        section.style.setProperty("--pointer-x", `${event.clientX - bounds.left}px`);
+        section.style.setProperty("--pointer-y", `${event.clientY - bounds.top}px`);
+      });
+    });
+  </script>
+</body>
+</html>
